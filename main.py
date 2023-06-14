@@ -46,7 +46,7 @@ async def report(request: Request, file: UploadFile = File()):
         "prediction": predictions1[0][0]
     }
 
-    return templates.TemplateResponse("base.html", {"request": request,  "img": encoded_image, "result":predictions })
+    return templates.TemplateResponse("base.html", {"request": request,  "img": encoded_image, "result":predictions})
 
 # # if __name__ == '__dynamic__':
 # #    uvicorn.run(app, host='0.0.0.0', port=8000)
