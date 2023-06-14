@@ -6,10 +6,12 @@ import base64
 from fastapi import FastAPI, UploadFile, File
 from fastapi.templating import Jinja2Templates
 
-# import tensorflow
-# from tensorflow import keras
-
+import tensorflow as tf
+from tensorflow import keras
+import io
 from PIL import Image
+import numpy as np
+import pandas as pd
 # import matplotlib.pyplot as plt
 
 app = FastAPI()
@@ -19,7 +21,7 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/")
 async def dynamic_file(request: Request):
-    return templates.TemplateResponse("report.html", {"request": request})
+    return templates.TemplateResponse("base.html", {"request": request})
 
 @app.post("/report")
 async def report(request: Request, file: UploadFile = File()):
@@ -33,7 +35,7 @@ async def report(request: Request, file: UploadFile = File()):
     img = np.array(img) / 255.0
     img = np.expand_dims(img, axis=0)
 
-    model = tf.keras.models.load_model("/workspace/Lung_Abnormality/pnuemonia_sequential1.h5")
+    model = tf.keras.models.load_model("pnuemonia_sequential1.h5")
     predictions = model.predict(img)
     predictions1 = predictions * 100
     threshold = 0.5
@@ -44,7 +46,7 @@ async def report(request: Request, file: UploadFile = File()):
         "prediction": predictions1[0][0]
     }
 
-    return templates.TemplateResponse("report.html", {"request": request,  "img": encoded_image, "result":predictions })
+    return templates.TemplateResponse("base.html", {"request": request,  "img": encoded_image, "result":predictions })
 
 # # if __name__ == '__dynamic__':
 # #    uvicorn.run(app, host='0.0.0.0', port=8000)
