@@ -13,7 +13,8 @@
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css" integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
-</head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  </head>
 
 <body>
     <section id="nav-bar">
@@ -70,51 +71,56 @@
       </div>
       <img src="/static/images/wave1.png" class="bottom-img">
       <!-- Add your banner image and headline here -->
-     
+    </section>
       <section id="Image-upload">
         <div class="drag-area">
           <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
           <header>Drag & Drop to Upload File</header>
           <span>OR</span>
           <button>Browse File</button>
-          <input type="file" hidden>
+          <input type="file" name="image" hidden>
         </div>
-        <script src="script1.js"></script>
+        <script src="/static/script1.js"></script>
       
-  
         </section>
-    </section>
+  
 
-    <section id="upload-section">
+    <!-- <section id="upload-section">
       <form action="upload.php" method="POST" enctype="multipart/form-data">
         <div>
           <input type="file" id="image-upload" name="image" accept=".jpg, .jpeg, .png">
           <button type="submit">Upload</button>
         </div>
       </form>
-      <p>Please upload your X-ray image for analysis.</p>
+      <p>Please upload your X-ray image for analysis.</p> -->
       
-      <div id="uploaded-image-container"></div>
+      <!-- <div id="uploaded-image-container"></div>
     </section>
     <form action="/report" method="POST" enctype="multipart/form-data">
       <div>
         <input type="file" id="image-upload" name="image" accept=".jpg, .jpeg, .png">
         <button type="submit">Result</button>
       </div>
-    </form>
+    </form> -->
+
+    <form action="/report" method="POST">
+      <div>
+        <button type="submit">Result</button>
+        </div>
+        </form>
+        {% if img %}
+        <h1>Probability of Having Pneumonia :{{result}}</h1>
+        {% endif %}
 
 
-    <section id="information-section">
-      <h2>Diabetic Retinopathy Information</h2>
+    <section id= "information-section">
+      <h2>Lung Diseases Information</h2>
       <!-- Add detailed information about Diabetic Retinopathy here -->
-      <p>Diabetic retinopathy is a complication of diabetes that affects the eyes...</p>
+      <p>The main 3 types of Lung Diseases are Pneumonia , Tuberculosis,Lung Cancer...</p>
     </section>
 
 
-    {% if img %}
-    <h1>Probability of Having Pneumonia :{{result}}</h1>
-    {% endif %}
-
+   
     <footer>
       <ul>
         <!-- Add your contact and social media links here -->

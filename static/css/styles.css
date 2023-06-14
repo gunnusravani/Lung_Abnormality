@@ -60,7 +60,7 @@ body {
   align-items: center;
 }
 
-#uploaded-image-container {
+/* #uploaded-image-container {
   width: 256px;
   height: 256px;
   margin-top: 20px;
@@ -71,7 +71,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
+} */
 
 
   
@@ -81,10 +81,7 @@ body {
   
   /* Information Section */
   
-  #information-section {
-    padding: 40px;
-    text-align: justify;
-  }
+ 
   
   /* Footer */
   
@@ -167,32 +164,34 @@ body {
 }
 
 /*-----Upload section-----*/
+
 .drag-area{
-  border: 2px dashed #fff;
-  height: 500px;
-  width: 700px;
+  border: 2px dashed #5fa3ec;
+  height: 400px;
+  width: 600px;
   border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  
 }
 .drag-area.active{
   border: 2px solid #fff;
 }
 .drag-area .icon{
   font-size: 100px;
-  color: #fff;
+  color: #b1dbf8;
 }
 .drag-area header{
   font-size: 30px;
   font-weight: 500;
-  color: #fff;
+  color: #6aaff4;
 }
 .drag-area span{
   font-size: 25px;
   font-weight: 500;
-  color: #fff;
+  color: #57b6f2;
   margin: 10px 0 15px 0;
 }
 .drag-area button{
@@ -201,8 +200,8 @@ body {
   font-weight: 500;
   border: none;
   outline: none;
-  background: #fff;
-  color: #b2d6f3;
+  background: #aad5ff;
+  color: #191a1b;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -211,4 +210,11 @@ body {
   width: 100%;
   object-fit: cover;
   border-radius: 5px;
+}
+
+/* Information section */
+#information-section {
+  padding: 40px;
+  text-align: justify;
+  
 }

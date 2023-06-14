@@ -24,11 +24,11 @@ async def dynamic_file(request: Request):
     return templates.TemplateResponse("base.html", {"request": request})
 
 @app.post("/report")
-async def report(request: Request, file: UploadFile = File()):
-    data = file.file.read()
-    #file.file.close()
+async def report(request: Request):
+    form = await request.form()
+    file_field = form["image"]
 
-    encoded_image = base64.b64encode(data).decode("utf-8")
+    data = await file_field.read()
     #contents = await file.read()
     img = Image.open(io.BytesIO(data))
     img = img.resize((150, 150))
