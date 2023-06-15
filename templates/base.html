@@ -28,7 +28,7 @@
 
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="float:right">
+          <ul class="navbar-nav ms-auto" style="float:right">
             <li class="nav-item" style="float:right">
               <a class="nav-link active" aria-current="page" href="#">HOME</a>
             </li>
@@ -39,14 +39,17 @@
             <li class="nav-item">
               <a class="nav-link disabled active" href="#" tabindex="-1" aria-disabled="true">FAQ'S</a>
             </li>
-            
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">SIGNUP/LOGIN</a>
+            </li>
           </ul>
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="float:right">
+
+          <!-- <ul class="navbar-nav ms-auto" >
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#">SIGNUP/LOGIN</a>
             </li>
       
-          </ul>
+          </ul> -->
         </div>
       </div>
     </nav>
@@ -58,7 +61,19 @@
           <div class="col-md-6">
             <p class="title">Upload the Lung X-ray </p>
             <p>We will give you the Complete report</p>
+          
+            <div class="drag-area">
+              <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
+              <header>Drag & Drop to Upload File</header>
+              <span>OR</span>
+              
+              <button>Browse File</button>
+              <input type="file" name="image" hidden>
+            </div>
+            <script src="/static/script1.js"></script>
+    
           </div>
+
           <div class="col-md-6 text-center">
             <img src="/static/images/Background.webp" class="img-fluid" style="width:500px;height:400px; padding-bottom:25px;">
           </div>
@@ -66,18 +81,19 @@
       </div>
       <img src="/static/images/wave1.png" class="bottom-img">
       <!-- Add your banner image and headline here -->
-
+<!-- 
     </section>
       <section id="Image-upload">
         <div class="drag-area">
           <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
           <header>Drag & Drop to Upload File</header>
           <span>OR</span>
+
           <button>Browse File</button>
           <input type="file" name="image" hidden>
         </div>
         <script src="/static/script1.js"></script>
-        </section>
+        </section> -->
   
 
     <!-- <section id="upload-section">
@@ -91,12 +107,14 @@
       
       <!-- <div id="uploaded-image-container"></div>
     </section> -->
+    <section id ="Report">
     <form action="/report" method="POST" enctype="multipart/form-data">
       <div>
         <input type="file" id="image-upload" name="image" accept=".jpg, .jpeg, .png">
         <button type="submit">Result</button>
       </div>
     </form>
+  </section>
 
 <!-- <section id="Display">
    
