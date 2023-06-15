@@ -28,8 +28,8 @@
 
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="float:right">
+            <li class="nav-item" style="float:right">
               <a class="nav-link active" aria-current="page" href="#">HOME</a>
             </li>
             <li class="nav-item">
@@ -37,27 +37,22 @@
             </li>
            
             <li class="nav-item">
-              <a class="nav-link disabled active" href="#" tabindex="-1" aria-disabled="true">INFORMATION</a>
+              <a class="nav-link disabled active" href="#" tabindex="-1" aria-disabled="true">FAQ'S</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="#">CONTACT US</a>
-            </li>
+            
           </ul>
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-but">
-              <a class="btn btn-outline light" aria-current="page" href="#">SIGNUP</a>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="float:right">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">SIGNUP/LOGIN</a>
             </li>
-            <li class="nav-but-outline light">
-              <a class="btn btn" href="#">LOGIN</a>
+      
           </ul>
         </div>
       </div>
     </nav>
   </section>
 
-
-   
-    <section id="banner">
+   <section id="banner">
       <div class='container'>
         <div class="row">
           <div class="col-md-6">
@@ -71,6 +66,7 @@
       </div>
       <img src="/static/images/wave1.png" class="bottom-img">
       <!-- Add your banner image and headline here -->
+
     </section>
       <section id="Image-upload">
         <div class="drag-area">
@@ -81,7 +77,6 @@
           <input type="file" name="image" hidden>
         </div>
         <script src="/static/script1.js"></script>
-      
         </section>
   
 
@@ -95,24 +90,28 @@
       <p>Please upload your X-ray image for analysis.</p> -->
       
       <!-- <div id="uploaded-image-container"></div>
-    </section>
+    </section> -->
     <form action="/report" method="POST" enctype="multipart/form-data">
       <div>
         <input type="file" id="image-upload" name="image" accept=".jpg, .jpeg, .png">
         <button type="submit">Result</button>
       </div>
-    </form> -->
+    </form>
 
-    <form action="/report" method="POST">
-      <div>
+<!-- <section id="Display">
+   
+      <div >
         <button type="submit">Result</button>
         </div>
-        </form>
-        {% if img %}
-        <h1>Probability of Having Pneumonia :{{result}}</h1>
-        {% endif %}
+        <script src="/static/script1.js"></script>
+      </section> -->
 
 
+    <div id="output">
+   
+      <h1>Probability of Having Pneumonia :{{result}}</h1>
+   
+    </div>
     <section id= "information-section">
       <h2>Lung Diseases Information</h2>
       <!-- Add detailed information about Diabetic Retinopathy here -->

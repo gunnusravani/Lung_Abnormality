@@ -114,9 +114,11 @@ body {
 }
 .navbar .navbar-nav .nav-item a{
   padding:15px;
+  float:right;
 }
 .navbar .navbar-nav li{
   padding:0 10px;
+  float:right;
 }
 .navbar .navbar-nav li a{
   color:#151515;
