@@ -6,6 +6,7 @@ import base64
 from fastapi import FastAPI, UploadFile, File
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
+from typing import Annotated
 
 import tensorflow as tf
 from tensorflow import keras
@@ -28,7 +29,13 @@ class FileRequest(BaseModel):
     file_path: str
 
 @app.post("/report")
-async def report_file(request: Request,image: UploadFile = File(...)):
+async def report_file(request: Request,image:Annotated[UploadFile, File(...)],
+                       patient_Name: Annotated[str,Form(...)],
+                       patient_Age: Annotated[str,Form(...)],
+                       patient_Email: Annotated[str,Form(...)],
+                       Gender: Annotated[str,Form(...)],
+                       image_Type:Annotated[str,Form(...)]
+                       ):
     # Process the file path
     # Your logic here
     # form = await request.form()
@@ -51,7 +58,7 @@ async def report_file(request: Request,image: UploadFile = File(...)):
         "prediction": predictions1[0][0]
     }
 
-    return templates.TemplateResponse("base.html", {"request": request,  "result":predictions})
+    return templates.TemplateResponse("base.html", {"request": request,  "result":predictions, "pat_Name":patient_Name,"pat_Age":patient_Age})
 
 # # if __name__ == '__dynamic__':
 # #    uvicorn.run(app, host='0.0.0.0', port=8000)
