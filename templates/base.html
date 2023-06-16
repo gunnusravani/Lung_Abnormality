@@ -14,6 +14,29 @@
     crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css" integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+
+    <style>
+      .container1{
+        max-width: 500px;
+        margin: 40px auto;
+      }
+  
+      .drag-area1 {
+        height: 300px;
+        width: 500px;
+        border: 2px dashed #ccc;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+  
+      .image-preview {
+        max-height: 100%;
+        max-width: 100%;
+      }
+    </style>
+
   </head>
 
 <body>
@@ -75,7 +98,7 @@
           </div>
 
           <div class="col-md-6 text-center">
-            <img src="/static/images/Background.webp" class="img-fluid" style="width:500px;height:400px; padding-bottom:25px;">
+            <img src="/static/images/Background.webp" class="img-fluid top-img" style="width:500px;height:400px; padding-bottom:25px;">
           </div>
         </div>
       </div>
@@ -94,27 +117,62 @@
         </div>
         <script src="/static/script1.js"></script>
         </section> -->
-  
-
-    <!-- <section id="upload-section">
-      <form action="upload.php" method="POST" enctype="multipart/form-data">
-        <div>
-          <input type="file" id="image-upload" name="image" accept=".jpg, .jpeg, .png">
-          <button type="submit">Upload</button>
+  <section id="form-data">
+    <div class="container1">
+      <h2>Patient Data Form</h2>
+      <form>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name" placeholder="Enter your name">
         </div>
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" class="form-control" id="email" placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input type="number" class="form-control" id="age" placeholder="Enter your age">
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select class="form-control" id="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="address">Address</label>
+          <textarea class="form-control" id="address" rows="3" placeholder="Enter your address"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="xray">X-ray Image (Drag and drop here)</label>
+          <div class="drag-area1" id="dragArea">
+            <img src="" alt="Image Preview" class="image-preview" id="imagePreview">
+          </div>
+          <input type="file" class="form-control-file" id="xray" accept="image/*" onchange="previewImage(event)">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
       </form>
-      <p>Please upload your X-ray image for analysis.</p> -->
-      
-      <!-- <div id="uploaded-image-container"></div>
-    </section> -->
-    <section id ="Report">
-    <form action="/report" method="POST" enctype="multipart/form-data">
-      <div>
-        <input type="file" id="image-upload" name="image" accept=".jpg, .jpeg, .png">
-        <button type="submit">Result</button>
-      </div>
-    </form>
+    </div>
+  
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      function previewImage(event) {
+        var reader = new FileReader();
+        var imagePreview = document.getElementById("imagePreview");
+  
+        reader.onload = function () {
+          imagePreview.src = reader.result;
+        };
+  
+        reader.readAsDataURL(event.target.files[0]);
+      }
+    </script>
   </section>
+
+
 
 <!-- <section id="Display">
    
