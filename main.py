@@ -1,10 +1,11 @@
 # dynamic.py
-from fastapi import FastAPI, UploadFile, File, Request
+from fastapi import FastAPI, UploadFile, File, Request,Form
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 import base64
 from fastapi import FastAPI, UploadFile, File
 from fastapi.templating import Jinja2Templates
+from pydantic import BaseModel
 
 import tensorflow as tf
 from tensorflow import keras
@@ -23,14 +24,18 @@ templates = Jinja2Templates(directory="templates")
 async def dynamic_file(request: Request):
     return templates.TemplateResponse("base.html", {"request": request})
 
-@app.post("/report")
-async def report(request: Request):
-    form = await request.form()
-    file_field = form["image"]
+class FileRequest(BaseModel):
+    file_path: str
 
-    data = await file_field.read()
-    #contents = await file.read()
-    img = Image.open(io.BytesIO(data))
+@app.post("/report")
+async def report_file(request: Request,image: UploadFile = File(...)):
+    # Process the file path
+    # Your logic here
+    # form = await request.form()
+    # file_field = form["image"]
+    # file_path = file_request.file_path
+    contents = await image.read()
+    img = Image.open(io.BytesIO(contents))
     img = img.resize((150, 150))
     img = np.array(img) / 255.0
     img = np.expand_dims(img, axis=0)
@@ -46,7 +51,7 @@ async def report(request: Request):
         "prediction": predictions1[0][0]
     }
 
-    return templates.TemplateResponse("base.html", {"request": request,  "img": encoded_image, "result":predictions})
+    return templates.TemplateResponse("base.html", {"request": request,  "result":predictions})
 
 # # if __name__ == '__dynamic__':
 # #    uvicorn.run(app, host='0.0.0.0', port=8000)

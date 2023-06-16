@@ -14,6 +14,29 @@
     crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css" integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+
+    <style>
+      .container1{
+        max-width: 500px;
+        margin: 40px auto;
+      }
+  
+      .drag-area1 {
+        height: 300px;
+        width: 500px;
+        border: 2px dashed #ccc;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+  
+      .image-preview {
+        max-height: 100%;
+        max-width: 100%;
+      }
+    </style>
+
   </head>
 
 <body>
@@ -28,8 +51,8 @@
 
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
+          <ul class="navbar-nav ms-auto" style="float:right">
+            <li class="nav-item" style="float:right">
               <a class="nav-link active" aria-current="page" href="#">HOME</a>
             </li>
             <li class="nav-item">
@@ -37,82 +60,134 @@
             </li>
            
             <li class="nav-item">
-              <a class="nav-link disabled active" href="#" tabindex="-1" aria-disabled="true">INFORMATION</a>
+              <a class="nav-link disabled active" href="#" tabindex="-1" aria-disabled="true">FAQ'S</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#">CONTACT US</a>
+              <a class="nav-link active" aria-current="page" href="#">SIGNUP/LOGIN</a>
             </li>
           </ul>
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-but">
-              <a class="btn btn-outline light" aria-current="page" href="#">SIGNUP</a>
+
+          <!-- <ul class="navbar-nav ms-auto" >
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">SIGNUP/LOGIN</a>
             </li>
-            <li class="nav-but-outline light">
-              <a class="btn btn" href="#">LOGIN</a>
-          </ul>
+      
+          </ul> -->
         </div>
       </div>
     </nav>
   </section>
 
-
-   
-    <section id="banner">
+   <section id="banner">
       <div class='container'>
         <div class="row">
           <div class="col-md-6">
             <p class="title">Upload the Lung X-ray </p>
             <p>We will give you the Complete report</p>
+          
+            <div class="drag-area">
+              <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
+              <header>Drag & Drop to Upload File</header>
+              <span>OR</span>
+              
+              <button>Browse File</button>
+              <input type="file" name="image" hidden>
+            </div>
+            <script src="/static/script1.js"></script>
+    
           </div>
+
           <div class="col-md-6 text-center">
-            <img src="/static/images/Background.webp" class="img-fluid" style="width:500px;height:400px; padding-bottom:25px;">
+            <img src="/static/images/Background.webp" class="img-fluid top-img" style="width:500px;height:400px; padding-bottom:25px;">
           </div>
         </div>
       </div>
       <img src="/static/images/wave1.png" class="bottom-img">
       <!-- Add your banner image and headline here -->
+<!-- 
     </section>
       <section id="Image-upload">
         <div class="drag-area">
           <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
           <header>Drag & Drop to Upload File</header>
           <span>OR</span>
+
           <button>Browse File</button>
           <input type="file" name="image" hidden>
         </div>
         <script src="/static/script1.js"></script>
-      
-        </section>
-  
-
-    <!-- <section id="upload-section">
-      <form action="upload.php" method="POST" enctype="multipart/form-data">
-        <div>
-          <input type="file" id="image-upload" name="image" accept=".jpg, .jpeg, .png">
-          <button type="submit">Upload</button>
+        </section> -->
+  <section id="form-data">
+    <div class="container1">
+      <h2>Patient Data Form</h2>
+      <form>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name" placeholder="Enter your name">
         </div>
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" class="form-control" id="email" placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input type="number" class="form-control" id="age" placeholder="Enter your age">
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select class="form-control" id="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="address">Address</label>
+          <textarea class="form-control" id="address" rows="3" placeholder="Enter your address"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="xray">X-ray Image (Drag and drop here)</label>
+          <div class="drag-area1" id="dragArea">
+            <img src="" alt="Image Preview" class="image-preview" id="imagePreview">
+          </div>
+          <input type="file" class="form-control-file" id="xray" accept="image/*" onchange="previewImage(event)">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
       </form>
-      <p>Please upload your X-ray image for analysis.</p> -->
-      
-      <!-- <div id="uploaded-image-container"></div>
-    </section>
-    <form action="/report" method="POST" enctype="multipart/form-data">
-      <div>
-        <input type="file" id="image-upload" name="image" accept=".jpg, .jpeg, .png">
-        <button type="submit">Result</button>
-      </div>
-    </form> -->
+    </div>
+  
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      function previewImage(event) {
+        var reader = new FileReader();
+        var imagePreview = document.getElementById("imagePreview");
+  
+        reader.onload = function () {
+          imagePreview.src = reader.result;
+        };
+  
+        reader.readAsDataURL(event.target.files[0]);
+      }
+    </script>
+  </section>
 
-    <form action="/report" method="POST">
-      <div>
+
+
+<!-- <section id="Display">
+   
+      <div >
         <button type="submit">Result</button>
         </div>
-        </form>
-        {% if img %}
-        <h1>Probability of Having Pneumonia :{{result}}</h1>
-        {% endif %}
+        <script src="/static/script1.js"></script>
+      </section> -->
 
 
+    <div id="output">
+   
+      <h1>Probability of Having Pneumonia :{{result}}</h1>
+   
+    </div>
     <section id= "information-section">
       <h2>Lung Diseases Information</h2>
       <!-- Add detailed information about Diabetic Retinopathy here -->
