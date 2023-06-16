@@ -227,6 +227,11 @@ body {
   max-width: 500px;
   margin: 40px auto;
 }
+.Open_button
+{
+  margin-left: 5px;
+  border-radius: 3px;
+}
 
 /* Information section */
 #information-section {
