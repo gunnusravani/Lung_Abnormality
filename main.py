@@ -46,7 +46,7 @@ async def report_file(request: Request,image:Annotated[UploadFile, File(...)],
     img = img.resize((150, 150))
     img = np.array(img) / 255.0
     img = np.expand_dims(img, axis=0)
-
+   
     model = tf.keras.models.load_model("pnuemonia_sequential1.h5")
     predictions = model.predict(img)
     predictions1 = predictions * 100
@@ -58,7 +58,7 @@ async def report_file(request: Request,image:Annotated[UploadFile, File(...)],
         "prediction": predictions1[0][0]
     }
 
-    return templates.TemplateResponse("base.html", {"request": request,  "result":predictions, "pat_Name":patient_Name,"pat_Age":patient_Age})
+    return templates.TemplateResponse("base.html", {"request": request,  "result":predictions, "img":image, "patient_Name":patient_Name,"patient_Age":patient_Age,"patient_Email":patient_Email,"Gender":Gender,"Uploaded_image":image_Type})
 
 # # if __name__ == '__dynamic__':
 # #    uvicorn.run(app, host='0.0.0.0', port=8000)
