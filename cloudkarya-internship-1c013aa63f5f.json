@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "cloudkarya-internship",
+  "private_key_id": "1c013aa63f5f227c77327833d7ce5052975211d9",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDIpAAvndSV8jsq\n14K4Y6vyN1Jn57dDnLEzApNK+2scOUv9KUknEn/1Gc9jYKT4mNYunjULjGVdYY7J\nyrS1rk9q7XX1kbgZGcxVEwFjCEIbhwCoF5mR++JILni62qepZeT3RHgsEJZLq0M7\nxCamJ00jGtdhNxKs59FLgjLV86rZW4/ImahUxB54O9me+iP/WjCuxjSa90V/a1lN\nAv1A3/9vk6lzy2s8U4DEIUw14M0JQ5K+xIRXZQ2TcBuXYXwNrkqcYaO1WOtaK7dL\nLSzyeigt3b49m2dOGWkAWKjb8Fjcetw2jZioHRfDHVkC9JIW1yhse0RgqycdARe0\nwkGN9TZPAgMBAAECggEAAWoWjj9glkYE4MJwK3iYZ7a4H/9kLVfXb/KeszKeiK5m\nuLwnxdy9hi7OZXby8sWxDNcUrKYquMPNS+Lf7z/xU2GlKTwDvjmOVTMzGU2fma4T\n9Rtle7/40mVxeG++KtWLDasv5a+gP5xPdwZk91rjklHIHulSemGP+iZK0XNMSwf1\nAzr9gf1swBGwIEBj9yDr+MWNVWxjg62SagwXg4+CA6oudJ5j3yVPjiQuNsZAfepd\nIxDMly5xKwXrE2+oNucxmAGU30hTdCWaWBwHOKDSIt3Hw2bn1fQ2VrrF4aFPGx07\n+pF7T50DRrA/JurAr1DriIEtR+eM1fv3PPykOLZCMQKBgQDoqXp3R54boL/Dutvl\nAaUieHm0RBgqk2X/ImlZrX96WKOk2IDpmSYUOSQ1HkzSVOrTQh8oTV7eZFx7I8NN\nT5iIEW1hQ+F6yJdcauskgm3OLnd/8wlYIrTandL5gulc+Uin1wqkR8JPmChsml92\nYbRzpg0tKMYsgfP2AaRsAYsb8wKBgQDcxD7rzFrLtf6/e6inbkEwvKhs9YBi62tB\n/xlT+eAzihWhh/uM+hJwK9PjlahVfHYWPp7mk/rojcg2a3RDfQcT4vX9QSYhn2al\nSVU+YIKCES1f/bt8aFGN3OtNmcDCBniGfbuKfP0yuRLvFqBpPsZAuvROB8fBPGhv\n2xRMfKIfNQKBgQDluPk/rwoQ026kzupxumcXmwboE9gcqb8q5ApLToCxB7ZEfLUE\ncX/kternO8y0XL4j64SiIYrLYSLjPxOGUVIU/8gVIpYOyuKQkM0uFk5fJwg84HZY\nfKQ/u1dln3nVoBm6BxztyiC0wFMhsGcTlzM6gTk/XqQVrBZ6z3JOZlO5OwKBgF5j\nOVOvh5JZOZW81RrgtNaVkp0jScUBSlZpLvcMeqMOgrkRXqejs4Zp9qnzLol+MS7J\njz6ePkR3egZqYscICaKjAvFIjXkKoeRBOkT1Fldt6KyF20cRguzYa3I+Ln/GLHm0\nAB7x2X96SXIXhnX49OJwDEvgX7NqlGxeios5LkeRAoGADv3r3huaw7Op0lFPjneN\na0nGq1GiQ98yHFEthfcD0Xk59hwVnSX9g89pc1ckwm0lSzyt4iqR6BqQ+KrTpaYW\nIxSITEwNMetW1eIY1LUSy/l9eb7SSEkd9xrVcMfO6TnRnI4imiC/EyTIWQbajwQo\nLYt5hkK3TLr19442j/0HiyY=\n-----END PRIVATE KEY-----\n",
+  "client_email": "monika@cloudkarya-internship.iam.gserviceaccount.com",
+  "client_id": "107964363984829261752",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/monika%40cloudkarya-internship.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

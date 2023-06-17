@@ -7,6 +7,7 @@ from fastapi import FastAPI, UploadFile, File
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from typing import Annotated
+import h5py
 
 import tensorflow as tf
 from tensorflow import keras
@@ -15,6 +16,12 @@ from PIL import Image
 import numpy as np
 import pandas as pd
 # import matplotlib.pyplot as plt
+
+import os
+from dotenv import load_dotenv
+
+from google.cloud import bigquery, storage
+from google.oauth2 import service_account
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -46,13 +53,32 @@ async def report_file(request: Request,image:Annotated[UploadFile, File(...)],
     img = img.resize((150, 150))
     img = np.array(img) / 255.0
     img = np.expand_dims(img, axis=0)
-   
-    model1= tf.keras.models.load_model("pnuemonia_sequential1.h5")
-    model2= tf.keras.models.load_model("tuberculosis_functional.h5")
-    model3= tf.keras.models.load_model("covid_sequential.h5")
-    predictions1 = model1.predict(img)
-    predictions2 = model2.predict(img)
-    predictions3 = model3.predict(img)
+    bucket_name = "monika1"
+    models = ["covid_sequential (1).h5","pnuemonia_sequential1.h5","tuberculosis_functional.h5"]
+    # Create a client instance
+    key_path = "cloudkarya-internship-1c013aa63f5f.json"
+    client = storage.Client.from_service_account_json(key_path)
+
+
+    # Retrieve the bucket
+    bucket = client.get_bucket(bucket_name)
+
+    # Retrieve the blob
+    pred=[]
+
+    for model_file in models:
+        blob = bucket.blob(model_file)
+        blob.download_to_filename(model_file)
+
+        model = tf.keras.models.load_model(model_file)
+        predictions = model.predict(img)
+        pred.append(predictions)
+
+        os.remove(model_file)
+
+    predictions1 = pred[0]
+    predictions2 = pred[1]
+    predictions3 = pred[2]
     predi1 = predictions1 * 100
     predi2 = predictions2 * 100
     predi3 = predictions3 * 100
@@ -61,11 +87,6 @@ async def report_file(request: Request,image:Annotated[UploadFile, File(...)],
     pred1 = predi1[0][0]
     pred2 = predi2[0][0]
     pred3 = predi3[0][0]
-   
-    result = {
-        "img": img,
-        "prediction": predictions1[0][0]
-    }
 
     return templates.TemplateResponse("base.html", {"request": request,  "result1":pred1,"result2":pred2,"result2":pred3, "img":image, "patient_Name":patient_Name,"patient_Age":patient_Age,"patient_Email":patient_Email,"Gender":Gender,"Uploaded_image":image_Type})
 
