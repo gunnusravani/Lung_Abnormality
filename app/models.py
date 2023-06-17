@@ -1,9 +1,16 @@
 from sqlalchemy import Column, Integer, String, LargeBinary  # Add LargeBinary import
 
-class Image(Base):
-    __tablename__ = "images"
+class Patient(Base):
+    __tablename__ = "patients"
 
     id = Column(Integer, primary_key=True, index=True)
-    filename = Column(String, index=True)
-    filepath = Column(String)
-    image_data = Column(LargeBinary)  # Add a new column for storing image data
+    img_file = Column(String, index=True)
+    patient_name = Column(String)
+    patient_dob = Column(Integer) 
+    patient_email = Column(String)
+    pnuemonia_prob=Column(Float)
+    Tuberculosis_prob=Column(Float)
+    Cancer_prob=Column(Float)
+    Covid19_prob=Column(Float)
+
+
