@@ -47,18 +47,27 @@ async def report_file(request: Request,image:Annotated[UploadFile, File(...)],
     img = np.array(img) / 255.0
     img = np.expand_dims(img, axis=0)
    
-    model = tf.keras.models.load_model("pnuemonia_sequential1.h5")
-    predictions = model.predict(img)
-    predictions1 = predictions * 100
+    model1= tf.keras.models.load_model("pnuemonia_sequential1.h5")
+    model2= tf.keras.models.load_model("tuberculosis_functional.h5")
+    model3= tf.keras.models.load_model("covid_sequential.h5")
+    predictions1 = model1.predict(img)
+    predictions2 = model2.predict(img)
+    predictions3 = model3.predict(img)
+    predi1 = predictions1 * 100
+    predi2 = predictions2 * 100
+    predi3 = predictions3 * 100
     threshold = 0.5
     binary_outputs = (predictions1 > threshold).astype(int)
-    predictions= predictions1[0][0]
+    pred1 = predi1[0][0]
+    pred2 = predi2[0][0]
+    pred3 = predi3[0][0]
+   
     result = {
         "img": img,
         "prediction": predictions1[0][0]
     }
 
-    return templates.TemplateResponse("base.html", {"request": request,  "result":predictions, "img":image, "patient_Name":patient_Name,"patient_Age":patient_Age,"patient_Email":patient_Email,"Gender":Gender,"Uploaded_image":image_Type})
+    return templates.TemplateResponse("base.html", {"request": request,  "result1":pred1,"result2":pred2,"result2":pred3, "img":image, "patient_Name":patient_Name,"patient_Age":patient_Age,"patient_Email":patient_Email,"Gender":Gender,"Uploaded_image":image_Type})
 
 # # if __name__ == '__dynamic__':
 # #    uvicorn.run(app, host='0.0.0.0', port=8000)
