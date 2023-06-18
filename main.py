@@ -97,9 +97,17 @@ async def report_file(request: Request,image:Annotated[UploadFile, File(...)],
         "prediction": predictions1[0][0]
     }
 
-    image_path = f'"https://storage.cloud.google.com/lung_abn/Lung_Images/{image}'
+    
     #dob = datetime.strptime(item.patient_dob, '%Y-%m-%d').date()
     dob = datetime.now()
+
+    filename = image.filename
+    bucket = storage_client.get_bucket('lung_abn')
+    blob = bucket.blob(f"Lung_Images/{filename}")
+    image_path = f'https://storage.cloud.google.com/lung_abn/Lung_Images/{filename}'
+    image.file.seek(0)
+    blob.upload_from_file(image.file, content_type=image.content_type)
+    image.close()
 
     query = f"""
     INSERT INTO `{project_id}.ImageData.ImageDataTable`
