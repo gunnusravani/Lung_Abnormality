@@ -111,7 +111,7 @@ async def report_file(request: Request,image:Annotated[UploadFile, File(...)],
     job.result()
     
 
-    return templates.TemplateResponse("base.html", {"request": request,  "result1":pred1,"result2":pred2,"result2":pred3, "img":image, "patient_Name":patient_Name,"patient_Age":patient_Age,"patient_Email":patient_Email,"Gender":Gender,"Uploaded_image":image_Type})
+    return templates.TemplateResponse("base.html", {"request": request,  "result1":pred1,"result2":pred2,"result3":pred3, "img":image, "patient_Name":patient_Name,"patient_Age":patient_Age,"patient_Email":patient_Email,"Gender":Gender,"Uploaded_image":image_Type})
 
 
 @app.post("/ImageData/")
