@@ -202,6 +202,8 @@ async def get_data(request: Request,patient_id:Annotated[str,Form(...)]):
    df = bigquery_client.query(query).to_dataframe()
    print(df.head())
    image_path=df.iloc[0]['img_file']
+   img = Image.open(image_path)
+   encoded_img =base64.b64encode(img).decode('utf-8')
    pred1=df.iloc[0]['pneumonia_prob']
    pred2=df.iloc[0]['tuberculosis_prob']
    pred4=df.iloc[0]['covid19_prob']
@@ -212,7 +214,7 @@ async def get_data(request: Request,patient_id:Annotated[str,Form(...)]):
    Gender=df.iloc[0]['patient_gender']
    image_type=df.iloc[0]['img_type']
 
-   return templates.TemplateResponse("base.html", {"request": request, "result1":pred1,"result2":pred2,"result3":pred3, "result4":pred4, "img":image_path, "patient_name":patient_name,"patient_dob":patient_dob,"patient_email":patient_email,"Gender":Gender,"Uploaded_image":image_type})
+   return templates.TemplateResponse("base.html", {"request": request, "result1":pred1,"result2":pred2,"result3":pred3, "result4":pred4, "img":image_path , "patient_name":patient_name,"patient_dob":patient_dob,"patient_email":patient_email,"Gender":Gender,"Uploaded_image":image_type})
    
    # df.head()
    #    return df.to_html()                   
