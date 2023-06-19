@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css"
     integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.css">
 
   <style>
     .container1 {
@@ -39,6 +41,8 @@
 
     .table-container {
       margin: 40px auto;
+      width: 500px;
+    height: 300px;
 
     }
 
@@ -59,6 +63,19 @@
     th {
       background-color: #f2f2f2;
     }
+
+
+  .image-box {
+      width: 300px;
+      height: 300px;
+      overflow: hidden;
+    }
+
+  .image-box img {
+      width: 100%;
+      height: auto;
+    }
+
   </style>
 </head>
 
@@ -76,9 +93,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto" style="float:right">
-            <li class="nav-item" style="float:right">
-              <a class="nav-link active" aria-current="page" href="#">HOME</a>
-            </li>
             <li class="nav-item">
               <a class="nav-link active" href="#">ABOUT US</a>
             </li>
@@ -107,17 +121,6 @@
       <div class="row">
         <div class="col-md-6">
 
-          <p class="title">Upload the Lung X-ray </p>
-          <p>We will give you the Complete report</p>
-
-          <div class="drag-area">
-            <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
-            <header>Drag & Drop to Upload File</header>
-            <span>OR</span>
-
-            <button>Browse File</button>
-            <input type="file" name="image" hidden>
-          </div>
 
         </div>
 
@@ -131,30 +134,46 @@
     <img src="/static/images/wave1.png" class="bottom-img">
   </section>
   <!-- Add your banner image and headline here -->
-
+ 
+  <form class="form-inline" style="padding-left: 10px;" action="/getdata" method="POST">
+    <h4 style="color:rgb(20, 49, 77)">Search for a Report ?</h4>
+    <div class="row">
+      <div class="col-md-3">
+    <label class="sr-only" for="inlineFormInputName2">Patient Id</label>
+    <input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" name="patient_id" placeholder="Patient Id(Patient Name+Dob)">
+      </div>
+    <div class="col-md-3">
+    <button type="submit" class="btn btn-primary mb-2">Submit</button>
+  </div>
+</form>
+  <div class="col-md-3">
+    <p> <a href="#form-data" onclick="toggleForm()">New Patient?</a></p>
+  </div>
+  </div>
+ 
 
     <section id="form-data">
       <div class="container1">
-        <button class="btn btn-secondary Open_button" onclick="toggleForm()">Form</button>
+
         <div id="formContainer" style="display: none;">
-          <form action="/report" method="POST" enctype="multipart/form-data">
+          <form action="/report" method="POST" enctype="multipart/form-data" >
             <div class="form-group">
               <h2>Patient Data Form</h2>
                <label for="name"> Name</label>
-              <input type="text" class="form-control" name="patient_Name" id="name" placeholder="Enter patient name">
+              <input type="text" class="form-control" name="patient_name" id="name" placeholder="Enter patient name" required>
             </div>
             <div class="form-group">
               <label for="email">Email address</label>
-              <input type="email" class="form-control" id="email" name="patient_Email"
+              <input type="email" class="form-control" id="email" name="patient_email"
                 placeholder="Enter patient email">
             </div>
             <div class="form-group">
-              <label for="age">Age</label>
-              <input type="number" class="form-control" id="age" name="patient_Age" placeholder="Enter patient age">
+              <label for="dob">Date of Birth</label>
+              <input type="text" id="dob-input" name="patient_dob" placeholder="Select Date of Birth" required>
             </div>
             <div class="form-group">
               <label for="gender">Gender</label>
-              <select class="form-control" name="Gender" id="gender">
+              <select class="form-control" name="Gender" id="gender" required>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
                 <option value="other">Other</option>
@@ -162,7 +181,7 @@
             </div>
             <div class="form-group">
               <label for="Image_type">Image Type</label>
-              <select class="form-control" name="image_Type" id="image_type">
+              <select class="form-control" name="image_type" id="image_type" required>
                 <option value="X-ray">X-ray</option>
                 <option value="CT">CT Scan</option>
               </select>
@@ -177,7 +196,7 @@
                 <img src="" alt="Image Preview">
               </div>
               <input type="file" class="form-control-file" id="xray" name="image" accept="image/*"
-                onchange="previewImage(event)">
+                onchange="previewImage(event)" required>
             </div>
             <button type="submit" class="btn btn-primary" onclick="submitForm()">Submit</button>
           </form>
@@ -187,6 +206,9 @@
       <!-- Bootstrap JS -->
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
       <script>
+          flatpickr("#dob-input", {
+        dateFormat: "Y-m-d", // Adjust the format as per your requirement
+    });
         function toggleForm() {
 
           var formContainer = document.getElementById("formContainer");
@@ -204,7 +226,7 @@
         function submitForm() {
           // Add your code here to handle form submission
           // alert("Form submitted successfully!");
-          toggleForm();
+         //  toggleForm();
           removeTable();
           // Hide the form after submission
         }
@@ -222,52 +244,62 @@
         }
       </script>
     </section>
-   
+
+
+    {% if img %}
+     
+    <div class="row">
+      <div class="image-box">
+        <img src="data:image/{{ image_format }};base64,{{ encoded_img }}" alt="Uploaded Image">
+      </div>
+
     <section id="table">
       <div class="table-container">
+        <div class="row">
         <h2>Patient Details</h2>
-        {% if img %}
+        
         <table>
           <tr>
             <th>Name</th>
-            <td>{{patient_Name}}</td>
+            <td>{{patient_name}}</td>
           </tr>
           <tr>
             <th>Email</th>
-            <td>{{patient_Email}}</td>
+            <td>{{patient_email}}</td>
           </tr>
           <tr>
-            <th>Age</th>
-            <td>{{patient_Age}}</td>
-          </tr>
-          <tr>
-            <th>Gender</th>
-            <td>{{Gender}}</td>
+            <th>Date of Birth</th>
+            <td>{{patient_dob}}</td>
           </tr>
           <tr>
             <th>Gender</th>
             <td>{{Gender}}</td>
           </tr>
         </table>
-
       </div>
-      <div class="row">
+      </div>
+
+    </div>
+      <div class="row table-container ">
         <table >
           <tr>
-            <th>Pneumonia Percentage</th>
+            <th>Pneumonia Probability</th>
             <td>{{result1}}</td>
           </tr>
           <tr>
-            <th>Tuberculosis Percentage </th>
+            <th>Tuberculosis Probability</th>
             <td>{{result2}}</td>
           </tr>
           <tr>
-            <th>Covid Percentage </th>
+            <th>Covid Probability </th>
+            <td>{{result4}}</td>
+          </tr>
+          <tr>
+            <th>Cancer Probability </th>
             <td>{{result3}}</td>
           </tr>
         </table>
        
-
       </div>
     </section>
 

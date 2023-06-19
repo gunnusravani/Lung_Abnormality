@@ -103,7 +103,7 @@ body {
   }
 
 .navbar{
-  background-image:linear-gradient(to right,#d3e6f8,#3295eb);
+  background-image:linear-gradient(to right,#c172c1,#680571);
 
   padding:0
 }
@@ -148,7 +148,7 @@ body {
 
 #banner
 {
-  background-image:linear-gradient(to right,#d3e6f8,#3295eb);
+  background-image:linear-gradient(to right,#c172c1,#680571);
   color:#121111;
   padding-top: 1%;
 }

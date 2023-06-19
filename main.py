@@ -23,8 +23,9 @@ from google.oauth2 import service_account
 
 from fastapi.responses import HTMLResponse
 import pandas as pd
+import os
 
-key_path = "cloudkarya-internship-1c013aa63f5f.json"
+key_path = "cloudkarya-internship-32c8df6a1507.json"
 bigquery_client = bigquery.Client.from_service_account_json(key_path)
 storage_client = storage.Client.from_service_account_json(key_path)
 
@@ -58,11 +59,11 @@ class FileRequest(BaseModel):
 
 @app.post("/report")
 async def report_file(request: Request,image:Annotated[UploadFile, File(...)],
-                       patient_Name: Annotated[str,Form(...)],
-                       patient_Age: Annotated[str,Form(...)],
-                       patient_Email: Annotated[str,Form(...)],
+                       patient_name: Annotated[str,Form(...)],
+                       patient_dob: Annotated[str,Form(...)],
+                       patient_email: Annotated[str,Form(...)],
                        Gender: Annotated[str,Form(...)],
-                       image_Type:Annotated[str,Form(...)]
+                       image_type:Annotated[str,Form(...)]
                        ):
 
     # Process the file path
@@ -70,37 +71,29 @@ async def report_file(request: Request,image:Annotated[UploadFile, File(...)],
     # form = await request.form()
     # file_field = form["image"]
     # file_path = file_request.file_path
-    
     contents = await image.read()
+
+    encoded_img=base64.b64encode(contents).decode('utf-8')
+    
+
     img = Image.open(io.BytesIO(contents))
     img = img.resize((150, 150))
     img = np.array(img) / 255.0
     img = np.expand_dims(img, axis=0)
-   
-    model1= tf.keras.models.load_model("pnuemonia_sequential1.h5")
-    model2= tf.keras.models.load_model("tuberculosis_functional.h5")
-    model3= tf.keras.models.load_model("covid_sequential.h5")
-    predictions1 = model1.predict(img)
-    predictions2 = model2.predict(img)
-    predictions3 = model3.predict(img)
-    predi1 = predictions1 * 100
-    predi2 = predictions2 * 100
-    predi3 = predictions3 * 100
-    threshold = 0.5
-    binary_outputs = (predictions1 > threshold).astype(int)
-    pred1 = predi1[0][0]
-    pred2 = predi2[0][0]
-    pred3 = predi3[0][0]
-   
-    result = {
-        "img": img,
-        "prediction": predictions1[0][0]
-    }
 
-    
-    #dob = datetime.strptime(item.patient_dob, '%Y-%m-%d').date()
-    dob = datetime.now()
+    bucket_name = "monika1"
 
+    # Create a client instance
+
+    # Retrieve the bucket
+    bucket1 = storage_client .get_bucket(bucket_name)
+
+    # Retrieve the blob
+    pred=[]
+
+    dob = patient_dob
+    dob1= patient_dob.replace("-", "")
+    patient_id=patient_name+dob1
     filename = image.filename
     bucket = storage_client.get_bucket('lung_abn')
     blob = bucket.blob(f"Lung_Images/{filename}")
@@ -108,18 +101,62 @@ async def report_file(request: Request,image:Annotated[UploadFile, File(...)],
     image.file.seek(0)
     blob.upload_from_file(image.file, content_type=image.content_type)
     image.close()
-
-    query = f"""
-    INSERT INTO `{project_id}.ImageData.ImageDataTable`
-    VALUES ('{image_path}', '{image_Type}', 'Need_to_send_var_for_patient_id', '{patient_Name}', 
-            DATE('{dob}'), '{Gender}', '{patient_Email}', 
-            {pred1}, {pred2}, {pred3}, {0})
-    """
-    job = bigquery_client.query(query)
-    job.result()
     
+    if(image_type=='X-ray'):
+            models = ["covid_sequential (1).h5","pnuemonia_sequential1.h5","tuberculosis_functional.h5"]
+            for model_file in models:
+                blob = bucket1.blob(model_file)
+                blob.download_to_filename(model_file)
+                model = tf.keras.models.load_model(model_file)
+                predictions = model.predict(img)
+                pred.append(predictions)
+                os.remove(model_file)
+            
+            pred1 = round(pred[0][0][1]*100,2)
+            pred2 = round(pred[1][0][0]*100,2)
+            pred4 = round(pred[2][0][0]*100,2)
+            pred3=0.0
+  
 
-    return templates.TemplateResponse("base.html", {"request": request,  "result1":pred1,"result2":pred2,"result3":pred3, "img":image, "patient_Name":patient_Name,"patient_Age":patient_Age,"patient_Email":patient_Email,"Gender":Gender,"Uploaded_image":image_Type})
+            
+            query = f"""
+            INSERT INTO `{project_id}.ImageData.ImageDataTable`
+            VALUES ('{image_path}', '{image_type}', '{patient_id}', '{patient_name}', 
+                    DATE('{dob}'), '{Gender}', '{patient_email}', 
+                    {pred1}, {pred2}, {pred3}, {pred4})
+            """
+            job = bigquery_client.query(query)
+            job.result()
+            
+
+            return templates.TemplateResponse("base.html", {"request": request,  "result1":pred1, "result2":pred2,"result3":pred3, "result4":pred4, "img":encoded_img, "patient_name":patient_name,"patient_dob":patient_dob,"patient_email":patient_email,"Gender":Gender,"Uploaded_image":image_type})
+     
+    else:
+        models = ["cancer_sequential.h5"]
+        for model_file in models:
+                blob = bucket1.blob(model_file)
+                blob.download_to_filename(model_file)
+                model = tf.keras.models.load_model(model_file)
+                pred4 = model.predict(img)
+                os.remove(model_file)
+
+                pred1 = 0.0
+                pred2 = 0.0
+                pred3 = round(pred[0][0][0]*100,2)
+                pred4 = 0.0
+
+
+        query = f"""
+            INSERT INTO `{project_id}.ImageData.ImageDataTable`
+            VALUES ('{image_path}', '{image_Type}', '{patient_id}', '{patient_name}', 
+                    DATE('{dob}'), '{Gender}', '{patient_email}', 
+                    {pred1}, {pred2}, {pred3}, {pred4})
+            """
+        job = bigquery_client.query(query)
+        job.result()     
+
+        return templates.TemplateResponse("base.html", {"request": request, "result1":pred1,"result2":pred2,"result3":pred3,"result4":pred4, "img":image_path, "patient_name":patient_name,"patient_dob":patient_dob,"patient_email":patient_email,"Gender":Gender,"Uploaded_image":image_type})
+
 
 
 @app.post("/ImageData/")
@@ -155,6 +192,37 @@ async def get_image_data(id):
    df = bigquery_client.query(query).to_dataframe()
    # df.head()
    return df.to_html()
+
+@app.post("/getdata")
+async def get_data(request: Request,patient_id:Annotated[str,Form(...)]):
+   query = f"""
+         SELECT  * FROM {project_id}.ImageData.ImageDataTable
+         WHERE patient_id ='{patient_id}';
+   """
+   df = bigquery_client.query(query).to_dataframe()
+   print(df.head())
+   image_path=df.iloc[0]['img_file']
+   pred1=df.iloc[0]['pneumonia_prob']
+   pred2=df.iloc[0]['tuberculosis_prob']
+   pred4=df.iloc[0]['covid19_prob']
+   pred3=df.iloc[0]['cancer_prob']
+   patient_name=df.iloc[0]['patient_name']
+   patient_email=df.iloc[0]['patient_email']
+   patient_dob=df.iloc[0]['patient_dob']
+   Gender=df.iloc[0]['patient_gender']
+   image_type=df.iloc[0]['img_type']
+
+   return templates.TemplateResponse("base.html", {"request": request, "result1":pred1,"result2":pred2,"result3":pred3, "result4":pred4, "img":image_path, "patient_name":patient_name,"patient_dob":patient_dob,"patient_email":patient_email,"Gender":Gender,"Uploaded_image":image_type})
+   
+   # df.head()
+   #    return df.to_html()                   
+                
+        
+
+
+
+
+
 
 
 # # if __name__ == '__dynamic__':
