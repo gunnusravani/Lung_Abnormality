@@ -130,11 +130,26 @@
     <div class='container'>
       <div class="row">
         <div class="col-md-6">
-
-
+        <h2>Swasa</h2>
+        <h4> Welcome to our website </h4>
+          <p> a powerful tool designed to assist in the early detection of respiratory diseases. Our platform employs cutting-edge technology to analyze X-ray images and provide valuable insights into the probability of several respiratory conditions, including pneumonia, tuberculosis, lung cancer, and COVID-19.</p>
+          <form class="form-inline" style="padding-left: 10px;" action="/getdata" method="POST">
+            <h4 style="color:rgb(20, 49, 77)">Search for a Report ?</h4>
+            <div class="row">
+              <div class="col-md-4">
+                <label class="sr-only" for="inlineFormInputName2">Patient Id</label>
+                <input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" name="patient_id"
+                  placeholder="Patient Id(Patient Name+Dob)">
+              </div>
+              <div class="col-md-4">
+                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+              </div>
+          </form>
+          <div class="col-md-4">
+            <p> <a href="#form-data"  style="color:black" onclick="toggleForm()">New Patient?</a></p>
+          </div>
+          </div>
         </div>
-
-
         <div class="col-md-6 text-center">
           <img src="/static/images/Background.webp" class="img-fluid top-img"
             style="width:500px;height:400px; padding-bottom:25px;">
@@ -145,7 +160,7 @@
   </section>
   <!-- Add your banner image and headline here -->
 
-  <form class="form-inline" style="padding-left: 10px;" action="/getdata" method="POST">
+  <!-- <form class="form-inline" style="padding-left: 10px;" action="/getdata" method="POST">
     <h4 style="color:rgb(20, 49, 77)">Search for a Report ?</h4>
     <div class="row">
       <div class="col-md-3">
@@ -160,7 +175,7 @@
   <div class="col-md-3">
     <p> <a href="#form-data" onclick="toggleForm()">New Patient?</a></p>
   </div>
-  </div>
+  </div> -->
 
 
   <section id="form-data">
@@ -185,8 +200,8 @@
           <div class="form-group">
             <label for="gender">Gender</label>
             <select class="form-control" name="Gender" id="gender" required>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
               <option value="other">Other</option>
             </select>
           </div>

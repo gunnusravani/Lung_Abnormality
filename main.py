@@ -202,8 +202,6 @@ async def get_data(request: Request,patient_id:Annotated[str,Form(...)]):
    df = bigquery_client.query(query).to_dataframe()
    print(df.head())
    image_path=df.iloc[0]['img_file']
-   img = Image.open(image_path)
-   encoded_img =base64.b64encode(img).decode('utf-8')
    pred1=df.iloc[0]['pneumonia_prob']
    pred2=df.iloc[0]['tuberculosis_prob']
    pred4=df.iloc[0]['covid19_prob']
