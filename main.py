@@ -211,11 +211,28 @@ async def get_data(request: Request,patient_id:Annotated[str,Form(...)]):
    patient_dob=df.iloc[0]['patient_dob']
    Gender=df.iloc[0]['patient_gender']
    image_type=df.iloc[0]['img_type']
+   img_file = df.iloc[0]['img_file']
 
-   return templates.TemplateResponse("base.html", {"request": request, "result1":pred1,"result2":pred2,"result3":pred3, "result4":pred4, "img":image_path , "patient_name":patient_name,"patient_dob":patient_dob,"patient_email":patient_email,"Gender":Gender,"Uploaded_image":image_type})
+   return templates.TemplateResponse("base.html", {"request": request, "result1":pred1,"result2":pred2,"result3":pred3, "result4":pred4, "img":image_path , "patient_name":patient_name,"patient_dob":patient_dob,"patient_email":patient_email,"Gender":Gender,"Uploaded_image":image_type, "img_file":img_file})
    
    # df.head()
-   #    return df.to_html()                   
+   #    return df.to_html()   
+   # 
+    
+@app.get("display/image")
+async def display_image():
+    bucket_name = "lung_abn"
+    filename = "Lung_Images/5.png"
+
+    bucket = storage_client.get_bucket(bucket_name)
+    blob = bucket.blob(filename)
+    
+    # Download the image from the bucket
+    image_data = blob.download_as_bytes()
+
+    # Return an HTML response with the image data embedded
+    return templates.TemplateResponse("base.html", {"request": request, "image_content": f'<img src="data:image/jpeg;base64,{image_data.decode()}" alt="Image">'})
+    # return HTMLResponse(content=f'<img src="data:image/jpeg;base64,{image_data.decode()}" alt="Image">')               
                 
         
 
