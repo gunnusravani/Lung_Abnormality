@@ -20,7 +20,7 @@
 
   <style>
     .container1 {
-      max-width: 600px;
+      max-width: 800px;
       margin: 40px auto;
       min-width: 5px;
     }
@@ -39,21 +39,22 @@
       max-height: 100%;
     }
 
-    .table-container1{
+    .table-container1 {
       max-width: 400px;
       max-height: 300px;
       padding-left: 60px;
 
     }
-   .table-container2
-   {
-    max-width: 400px;
-    max-height: 300px;
-    padding-top: 40px;
-    padding-left: 100px;
-    align-items: center;
 
-   }
+    .table-container2 {
+      max-width: 400px;
+      max-height: 300px;
+      padding-top: 40px;
+      padding-left: 100px;
+      align-items: center;
+
+    }
+
     table {
       width: 100%;
       height: auto;
@@ -76,16 +77,86 @@
 
     .image-box {
       max-width: 400px;
-      max-height: 300px;
+      height: 340px;
       overflow: hidden;
-      padding-left: 100px;
+      padding-left: 60px;
       padding-top: 5px;
     }
 
     .image-box img {
       width: 100%;
-      height: auto;
+      height: 100%;
     }
+
+  .card3 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width:75%;
+  size: 20px;
+  word-wrap: break-word;
+  border-radius: 0.25rem;
+  margin-left:40px;
+}
+.card-body6{
+          flex: 1 1 auto;
+          position: center;
+          text-align: center;
+          color: azure;
+          text-shadow: 0 1px 2px rgb(255, 247, 247);
+          background-color: rgb(51, 173, 235);
+          font-size :30px;
+        }
+    .card4 {
+  /* position: relative; */
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width:89%;
+  size: 20px;
+  word-wrap: break-word;
+  border-radius: 0.25rem;
+}
+    .card5 {
+  /* position: relative; */
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width:80%;
+  size: 20px;
+  word-wrap: break-word;
+  border-radius: 0.25rem;
+}
+.card-body7{
+          flex: 1 1 auto;
+          /* position: center; */
+          text-align: left;
+          color: rgb(13, 14, 14);
+          text-shadow: 0 1px 2px rgb(120, 114, 114);
+          background-color: rgb(224, 240, 249);
+          font-size :20px;
+          padding: 0.5rem 0.5rem;
+        }
+
+        .card-body8{
+          flex: 1 1 auto;
+          /* position: center; */
+          text-align: left;
+          color: rgb(13, 14, 14);
+          text-shadow: 0 1px 2px rgb(120, 114, 114);
+          background-color: rgb(224, 240, 249);
+          font-size :16px;
+          padding: 0.5rem 0.5rem;
+          font-weight: 400;
+          
+        }
+
+#Analysis
+{
+  padding-left: 200px;
+  padding-right: 0px;
+}
   </style>
 </head>
 
@@ -130,9 +201,11 @@
     <div class='container'>
       <div class="row">
         <div class="col-md-6">
-        <h2>Swasa</h2>
-        <h4> Welcome to our website </h4>
-          <p> a powerful tool designed to assist in the early detection of respiratory diseases. Our platform employs cutting-edge technology to analyze X-ray images and provide valuable insights into the probability of several respiratory conditions, including pneumonia, tuberculosis, lung cancer, and COVID-19.</p>
+          <h2>Swasa</h2>
+          <h4> Welcome to our website </h4>
+          <p> a powerful tool designed to assist in the early detection of respiratory diseases. Our platform employs
+            cutting-edge technology to analyze X-ray images and provide valuable insights into the probability of
+            several respiratory conditions, including pneumonia, tuberculosis, lung cancer, and COVID-19.</p>
           <form class="form-inline" style="padding-left: 10px;" action="/getdata" method="POST">
             <h4 style="color:rgb(20, 49, 77)">Search for a Report ?</h4>
             <div class="row">
@@ -146,15 +219,15 @@
               </div>
           </form>
           <div class="col-md-4">
-            <p> <a href="#form-data"  style="color:black" onclick="toggleForm()">New Patient?</a></p>
+            <p> <a href="#form-data" style="color:black" onclick="toggleForm()">New Patient?</a></p>
           </div>
-          </div>
-        </div>
-        <div class="col-md-6 text-center">
-          <img src="/static/images/Background.webp" class="img-fluid top-img"
-            style="width:500px;height:400px; padding-bottom:25px;">
         </div>
       </div>
+      <div class="col-md-6 text-center">
+        <img src="/static/images/Background.webp" class="img-fluid top-img"
+          style="width:500px;height:400px; padding-bottom:25px;">
+      </div>
+    </div>
     </div>
     <img src="/static/images/wave1.png" class="bottom-img">
   </section>
@@ -183,20 +256,42 @@
 
       <div id="formContainer" style="display: none;">
         <form action="/report" method="POST" enctype="multipart/form-data">
+          <br>
           <div class="form-group">
             <h2>Patient Data Form</h2>
+            <br>
             <label for="name"> Name</label>
             <input type="text" class="form-control" name="patient_name" id="name" placeholder="Enter patient name"
               required>
           </div>
+          <br>
           <div class="form-group">
             <label for="email">Email address</label>
             <input type="email" class="form-control" id="email" name="patient_email" placeholder="Enter patient email">
           </div>
+          <br>
           <div class="form-group">
+
+          <div class="row">
+            <div class="col-md-4">
+                <label for="phone">Mobile No:</label>
+                <input type="text" id="mobile" name="patient_mobile" placeholder="Enter Mobile Number" required>
+              </div>
+         
+          <br>  
+            
+          <div class="col-md-4">
             <label for="dob">Date of Birth</label>
             <input type="text" id="dob-input" name="patient_dob" placeholder="Select Date of Birth" required>
           </div>
+
+          <div class="col-md-4">
+            <label for="aadhar">Aadhar Number:</label>
+            <input type="text" id="aadhar" name="patient_id" placeholder="Enter Aadhar Number" required>
+          </div>
+        </div>
+          <br>
+
           <div class="form-group">
             <label for="gender">Gender</label>
             <select class="form-control" name="Gender" id="gender" required>
@@ -205,6 +300,8 @@
               <option value="other">Other</option>
             </select>
           </div>
+          
+          <br>
           <div class="form-group">
             <label for="Image_type">Image Type</label>
             <select class="form-control" name="image_type" id="image_type" required>
@@ -212,15 +309,18 @@
               <option value="CT">CT Scan</option>
             </select>
           </div>
+          
           <!-- <div class="form-group">
                 <label for="address">Address</label>
                 <textarea class="form-control" id="address" rows="3"  name="patient_Address" placeholder="Enter patient address"></textarea>
               </div> -->
+
+          <br>    
           <div class="form-group">
             <label for="xray">X-ray Image (Drag and drop here)</label>
             <div class="image-preview" id="imagePreview">
               <img src="" alt="Image Preview">
-            </div>
+          </div>
             <input type="file" class="form-control-file" id="xray" name="image" accept="image/*"
               onchange="previewImage(event)" required>
           </div>
@@ -272,65 +372,118 @@
   </section>
 
 
-  {% if img %}
+  {% if img1 or img %}
   <section id="Analysis">
 
+  <div class="row" >
+  <div class="card3" >
+    <div class="card-body6" >Name: {{patient_name}}</div>
+    </div>
+  </div>
+  <br>
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-5">
+       
         <div class="image-box">
-          <img src="data:image/{{ image_format }};base64,{{ img }}" alt="Uploaded Image">
+          {% if img %}
+          <img src="{{ img }}" >
+          {% else %}
+          <img src="data:image/{{ image_format }};base64,{{ img1 }}">
+          {% endif %}
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="table-container1">
-          <h2>Patient Details</h2>
+      <div class="col-md-5">
+          <div class="row" >
+            <div class="card4" >
+              <div class="card-body7" >DOB: {{patient_dob}}</div>
+              </div>
+            </div>
+            <br>
 
-          <table>
-            <tr>
-              <th>Name</th>
-              <td>{{patient_name}}</td>
-            </tr>
-            <tr>
-              <th>Email</th>
-              <td>{{patient_email}}</td>
-            </tr>
-            <tr>
-              <th>Date of Birth</th>
-              <td>{{patient_dob}}</td>
-            </tr>
-            <tr>
-              <th>Gender</th>
-              <td>{{Gender}}</td>
-            </tr>
-          </table>
-        </div>
+            <div class="row" >
+              <div class="card4" >
+                <div class="card-body7" >Gender: {{Gender}}</div>
+                </div>
+              </div>
+              <br>
+
+              <div class="row" >
+                <div class="card4" >
+                  <div class="card-body7">Date of Test :{{ date }}</div>
+                  </div>
+                </div>
+              <br>
+                <div class="row" >
+                  <div class="col-md-6">
+                  <div class="card5" >
+                    <div class="card-body8" style="background-color:{% if result1 >50 %}
+                      #f55d6c;color: white
+                    {% elif result1 <20 %}
+                    #85ed79;
+                    {% else %}
+                    #f9fc90;
+                    {% endif %}
+                  ">
+                    Pneumonia: {{result1}} %
+                  </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="card5" >
+                      <div class="card-body8" style="background-color:
+                      {% if result2 > 50 %}
+                      #f55d6c;color: white
+                      {% elif result2 < 20 %}
+                      #85ed79;
+                      {% else %}
+                      #f9fc90;
+                      {% endif %}
+                    ">
+                      Tuberculosis: {{result2}} %
+                    </div>
+                      </div>
+                    </div>
+                </div>
+
+
+                <br>
+
+                <div class="row" >
+                  <div class="col-md-6">
+                  <div class="card5" >
+                    <div class="card-body8" style="background-color:{% if result3 >50 %}
+                      #f55d6c;color: white
+                    {% elif result3 <20 %}
+                    #85ed79;
+                    {% else %}
+                    #f9fc90;
+                    {% endif %}
+                  ">
+                    Cancer: {{result3}} %
+                  </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="card5" >
+                      <div class="card-body8" style="background-color:
+                      {% if result4 > 50 %}
+                      #f55d6c;color: white
+                      {% elif result4 < 20 %}
+                      #85ed79;
+                      {% else %}
+                      #f9fc90;
+                      {% endif %}
+                    ">
+                      Covid19 : {{result4}} %
+                    </div>
+                      </div>
+                    </div>
+                </div>
+              
+
     
-    </div>
-    </div>
-    <div class="col-md-10">
-      <div class="table-container2">
-      <table>
-        <tr>
-          <th>Pneumonia Probability</th>
-          <td>{{result1}}</td>
-        </tr>
-        <tr>
-          <th>Tuberculosis Probability</th>
-          <td>{{result2}}</td>
-        </tr>
-        <tr>
-          <th>Covid Probability </th>
-          <td>{{result4}}</td>
-        </tr>
-        <tr>
-          <th>Cancer Probability </th>
-          <td>{{result3}}</td>
-        </tr>
-      </table>
-      </div>
-    </div>
-   <div>
-  
   </section>
 
   <script>

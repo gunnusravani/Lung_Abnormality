@@ -63,7 +63,9 @@ async def report_file(request: Request,image:Annotated[UploadFile, File(...)],
                        patient_dob: Annotated[str,Form(...)],
                        patient_email: Annotated[str,Form(...)],
                        Gender: Annotated[str,Form(...)],
-                       image_type:Annotated[str,Form(...)]
+                       image_type:Annotated[str,Form(...)],
+                       patient_mobile:Annotated[str,Form(...)],
+                       patient_id:Annotated[str,Form(...)]
                        ):
 
     # Process the file path
@@ -75,14 +77,14 @@ async def report_file(request: Request,image:Annotated[UploadFile, File(...)],
 
     encoded_img=base64.b64encode(contents).decode('utf-8')
     
-
+    
     img = Image.open(io.BytesIO(contents))
     img = img.resize((150, 150))
     img = np.array(img) / 255.0
     img = np.expand_dims(img, axis=0)
 
     bucket_name = "monika1"
-
+   
     # Create a client instance
 
     # Retrieve the bucket
@@ -91,9 +93,11 @@ async def report_file(request: Request,image:Annotated[UploadFile, File(...)],
     # Retrieve the blob
     pred=[]
 
-    dob = patient_dob
-    dob1= patient_dob.replace("-", "")
-    patient_id=patient_name+dob1
+    # dob = patient_dob
+    # dob1= patient_dob.replace("-", "")
+    # patient_id=patient_name+dob1
+    date_test=datetime.now()
+    date_of_test = date_test.date()
     filename = image.filename
     bucket = storage_client.get_bucket('lung_abn')
     blob = bucket.blob(f"Lung_Images/{filename}")
@@ -122,14 +126,15 @@ async def report_file(request: Request,image:Annotated[UploadFile, File(...)],
             query = f"""
             INSERT INTO `{project_id}.ImageData.ImageDataTable`
             VALUES ('{image_path}', '{image_type}', '{patient_id}', '{patient_name}', 
-                    DATE('{dob}'), '{Gender}', '{patient_email}', 
-                    {pred1}, {pred2}, {pred3}, {pred4})
+                    DATE('{patient_dob}'), '{Gender}', '{patient_email}','{patient_mobile}',
+                    {pred1}, {pred2}, {pred3}, {pred4}, DATE('{date_of_test}'))
             """
             job = bigquery_client.query(query)
             job.result()
+            print(date_of_test)
             
 
-            return templates.TemplateResponse("base.html", {"request": request,  "result1":pred1, "result2":pred2,"result3":pred3, "result4":pred4, "img":encoded_img, "patient_name":patient_name,"patient_dob":patient_dob,"patient_email":patient_email,"Gender":Gender,"Uploaded_image":image_type})
+            return templates.TemplateResponse("base.html", {"request": request,  "result1":pred1, "result2":pred2,"result3":pred3, "result4":pred4, "img1":encoded_img, "patient_name":patient_name,"patient_dob":patient_dob,"patient_email":patient_email,"Gender":Gender,"Uploaded_image":image_type,"date":str(date_of_test)})
      
     else:
         models = ["cancer_sequential.h5"]
@@ -211,9 +216,10 @@ async def get_data(request: Request,patient_id:Annotated[str,Form(...)]):
    patient_dob=df.iloc[0]['patient_dob']
    Gender=df.iloc[0]['patient_gender']
    image_type=df.iloc[0]['img_type']
-   img_file = df.iloc[0]['img_file']
+   date_of_test=df.iloc[0]['date_of_test']
+ 
 
-   return templates.TemplateResponse("base.html", {"request": request, "result1":pred1,"result2":pred2,"result3":pred3, "result4":pred4, "img":image_path , "patient_name":patient_name,"patient_dob":patient_dob,"patient_email":patient_email,"Gender":Gender,"Uploaded_image":image_type, "img_file":img_file})
+   return templates.TemplateResponse("base.html", {"request": request, "result1":pred1,"result2":pred2,"result3":pred3, "result4":pred4, "img":image_path, "patient_name":patient_name,"patient_dob":patient_dob,"patient_email":patient_email,"Gender":Gender,"Uploaded_image":image_type,"date":date_of_test})
    
    # df.head()
    #    return df.to_html()   
